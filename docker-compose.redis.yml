@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  redis:
+    image: redis:6
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - test_redis_data:/data
+
+volumes:
+  test_redis_data: {}

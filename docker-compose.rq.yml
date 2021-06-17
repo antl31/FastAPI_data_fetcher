@@ -1,0 +1,15 @@
+version: "3"
+services:
+  worker:
+    build:
+      context: ./api
+    environment:
+      - DATABASE_URI=postgresql://test_app:password@db/test_app
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    env_file:
+      - .env
+    volumes:
+      - ./api/app:/home/outflink/api/app
+      - ./api/migrations:/home/outflink/api/migrations
+    command: rq worker --url redis://redis:6379 my_queue

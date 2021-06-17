@@ -1,0 +1,2 @@
+class FakeAPIError(Exception):
+    pass

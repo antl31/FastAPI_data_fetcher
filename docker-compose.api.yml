@@ -1,0 +1,18 @@
+version: "3"
+services:
+  api:
+    build:
+      context: ./api
+    environment:
+      - DATABASE_URI=postgresql://test_app:password@db/test_app
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    volumes:
+      - ./api/app:/home/outflink/api/app
+      - ./api/migrations:/home/outflink/api/migrations
+    entrypoint: ["./api/entrypoint-dev.sh"]
+    command: uvicorn api.app.main:app --host 0.0.0.0 --log-level debug --reload --use-colors
