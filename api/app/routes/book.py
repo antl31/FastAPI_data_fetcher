@@ -39,9 +39,8 @@ async def get_books_from_queue(
     job = background_task.get_job_by_id(job_id)
     if job:
         if job.result:
-            books = [BookSchema(**book) for book in job.result]
-            book_dao.create_all(books)
+            book_dao.create_all([BookSchema(**book) for book in job.result])
             book_dao.commit()
-            return {"data": books, "count": len(job.result)}
+            return {"data": job.result, "count": len(job.result)}
 
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="not found")

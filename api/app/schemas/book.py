@@ -14,9 +14,9 @@ class BookSchema(BaseModel):
         extra = "ignore"
 
     @validator("description")
-    def validate(cls, value: str):
-        assert len(value) < 1000, " too long description"
-        return value
+    def validate_description(cls, v: str):
+        assert len(v) < 1000, " too long description"
+        return v
 
     def __hash__(self):
         return hash(f"{self.primary_isbn10}_{self.primary_isbn13}")
